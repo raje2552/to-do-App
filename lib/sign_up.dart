@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:untitled3/page_tasks.dart';
 
 import 'database/controllers_shared_pref.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({super.key});
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -91,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     key: 'username',
                     value: controller.text,
                   );
-                  Navigator.pushReplacementNamed(context, '/PageTasks' );
+                  Get.off(PageTasks());
                 }
               },
               child: Container(

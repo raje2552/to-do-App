@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:untitled3/database/controllers_shared_pref.dart';
 import 'package:untitled3/widgets/crad_custame_widget.dart';
 import 'package:untitled3/widgets/display_task_widget.dart';
 
 import 'Classes/task.dart';
-
-List<Task> tasks = [];
+import 'add_task_screen.dart';
 
 class PageTasks extends StatefulWidget {
-  PageTasks({super.key});
+  const PageTasks({super.key});
 
   @override
   State<PageTasks> createState() => _PageTasksState();
@@ -39,7 +39,7 @@ class _PageTasksState extends State<PageTasks> {
             children: [
               Gap(37),
               Container(
-                height: 163,
+                height: 170,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -64,28 +64,30 @@ class _PageTasksState extends State<PageTasks> {
                       Center(
                         child: SizedBox(
                           width: 350,
-                          height: 110,
+                          height: 116,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: [
-                              card_display(
+                              CardDisplay(
                                 text: 'done',
-                                count: tasks.length,
+                                count: Task.tasks.length,
                                 image: Icon(
                                   Icons.done_outline,
                                   color: Color.fromRGBO(255, 255, 255, 0.87),
                                 ),
                                 background: Color.fromRGBO(118, 196, 153, 1),
+                                checkDone: 0,
                               ),
                               Gap(8),
-                              card_display(
+                              CardDisplay(
                                 text: 'To do',
-                                count: 0,
+                                count: Task.tasks.length,
                                 image: Icon(
                                   Icons.remove_done,
                                   color: Color.fromRGBO(255, 255, 255, 0.87),
                                 ),
                                 background: Color.fromRGBO(152, 135, 245, 1),
+                                checkDone: 1,
                               ),
                             ],
                           ),
@@ -96,58 +98,65 @@ class _PageTasksState extends State<PageTasks> {
                 ),
               ),
               Gap(18),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: tasks.isEmpty
-                    ? Container(
-                  height: 160,
+              Obx(() {
+                return Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'No tasks for today!',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black87,
-                        ),
-                      ),
+                  child: Task.tasks.isEmpty
+                      ? Container(
+                          height: 160,
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'No tasks for today!',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black87,
+                                ),
+                              ),
 
-                      Gap(4),
+                              Gap(4),
 
-                      Text(
-                        'Tap the + button to add your first one.',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
+                              Text(
+                                'Tap the + button to add your first one.',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : SizedBox(
+                        width: double.infinity,
+                        height: 400,
+                        child: Obx((){
+                          return ListView.builder(
+                            itemCount: Task.tasks.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 6),
+                                child: DisplayTaskWidget(
+                                  task: Task.tasks[index],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                        )
                       ),
-                    ],
-                  ),
-                )
-                    : ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: tasks.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: DisplayTaskWidget(
-                        // task: tasks[index],
-                      ),
-                    );
-                  },
-                ),
-              )
+                );
+              }),
             ],
           ),
         ),
@@ -163,7 +172,7 @@ class _PageTasksState extends State<PageTasks> {
 
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, "/add_task");
+            Get.to(AddTaskScreen());
           },
           backgroundColor: Colors.transparent,
 

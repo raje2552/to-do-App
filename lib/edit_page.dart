@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:untitled3/Classes/task.dart';
-import 'package:untitled3/page_tasks.dart';
+import 'package:get/get.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+import 'Classes/task.dart';
+
+class EditPage extends StatefulWidget {
+  final Task task;
+
+  const EditPage({super.key, required this.task});
 
   @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
+  State<EditPage> createState() => _EditPageState();
 }
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
-  TextEditingController controller = TextEditingController();
-
+class _EditPageState extends State<EditPage> {
+  TextEditingController get controller => TextEditingController(text: widget.task.getTitle());
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    'Add Task',
+                    'Edit Task',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -51,7 +53,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     ),
                   ),
                 ),
-                Icon(Icons.add_box_outlined , size: 24, )
+                Icon(Icons.edit, size: 24),
               ],
             ),
             Gap(35),
@@ -63,7 +65,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(10)
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 hint: Text(
                   'What needs to be done?',
@@ -80,10 +82,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             Gap(19),
 
             InkWell(
-              onTap: (){
-                if(controller.text.isNotEmpty){
-                  Task task = Task(title :controller.text);
-                  Navigator.pop(context);
+              onTap: () {
+                if (controller.text.isNotEmpty) {
+                  widget.task.setTitle(controller.text);
+                  Get.back();
                 }
               },
 

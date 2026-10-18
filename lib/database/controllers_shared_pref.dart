@@ -26,7 +26,7 @@ class ControllerSharedPref {
     }
   }
 
-  /**/
+
   static dynamic getData(String key){
     return sharedPref.get(key);
   }
