@@ -82,7 +82,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               onTap: () {
                 if (controller.text.isNotEmpty) {
                   Task task = Task(
-                    id: Task.tasks.length + 1,
+                    id: Task.tasks.length ,
                     title: controller.text,
                   );
                   Task.addTask(task);

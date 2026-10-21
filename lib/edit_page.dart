@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:untitled3/page_tasks.dart';
 
 import 'Classes/task.dart';
 
 class EditPage extends StatefulWidget {
-  final Task task;
+  final int id ;
 
-  const EditPage({super.key, required this.task});
+  const EditPage({super.key, required this.id});
 
   @override
-  State<EditPage> createState() => _EditPageState();
+  State<EditPage> createState() => _EditPageState(id: id);
 }
 
 class _EditPageState extends State<EditPage> {
-  TextEditingController get controller => TextEditingController(text: widget.task.getTitle());
+  int id;
+  _EditPageState({required this.id});
+  late TextEditingController  controller = TextEditingController(text: Task.tasks[id].getTitle());
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +71,7 @@ class _EditPageState extends State<EditPage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 hint: Text(
-                  'What needs to be done?',
+                  'you can edit task !??! ',
                   style: TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.w400,
@@ -80,12 +83,15 @@ class _EditPageState extends State<EditPage> {
             ),
 
             Gap(19),
-
             InkWell(
               onTap: () {
+                print("${widget.id} is this id is passed error number (1544-4856) ");
                 if (controller.text.isNotEmpty) {
-                  widget.task.setTitle(controller.text);
-                  Get.back();
+                  print("${Task.tasks[widget.id].getTitle()} this old title  error number (46887-48268)");
+                  Task.tasks[widget.id].setTitle(controller.text);
+                  print("${Task.tasks[widget.id].getTitle()} this new title  error number (46887-48268)");
+
+                  Get.off(PageTasks());
                 }
               },
 

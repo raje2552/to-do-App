@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-
 import '../Classes/task.dart';
 import '../edit_page.dart';
 
@@ -51,7 +49,7 @@ class DisplayTaskWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Expanded(child: Text(task.title.toString() , style: TextStyle(
+                Expanded(child: Text(task.getTitle(), style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
@@ -60,7 +58,8 @@ class DisplayTaskWidget extends StatelessWidget {
                 ),)),
                 IconButton(
                   onPressed: () {
-                    Get.to(EditPage(task: task));
+                    debugPrint("${task.getId()} is check for id before passed in EditPage (475585-269178)");
+                    Get.to(EditPage(id: task.getId(),));
                   },
                   icon: Icon(Icons.edit),
                 ),

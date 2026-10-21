@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:untitled3/database/controllers_shared_pref.dart';
 import 'package:untitled3/widgets/crad_custame_widget.dart';
 import 'package:untitled3/widgets/display_task_widget.dart';
-
 import 'Classes/task.dart';
 import 'add_task_screen.dart';
 
